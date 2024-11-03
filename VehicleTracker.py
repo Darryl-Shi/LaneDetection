@@ -24,16 +24,17 @@ class VehicleTracker:
 
     def draw_vehicle_counts(self, frame):
         y_offset = 30
+        text = "road is congested"
+        cv2.putText(
+            frame,
+            text,
+            (10, y_offset),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.7,
+            (255, 255, 255),
+            2,
+        )
         for lane_name, count in self.vehicle_counts.items():
-            text = f"{lane_name}: {count} vehicles"
-            cv2.putText(
-                frame,
-                text,
-                (10, y_offset),
-                cv2.FONT_HERSHEY_SIMPLEX,
-                0.7,
-                (255, 255, 255),
-                2,
-            )
+            #text = f"{lane_name}: {count} vehicles"
             y_offset += 30
         return frame

@@ -7,10 +7,9 @@ from ParameterTuner import ParameterTuner
 from DataLogger import DataLogger
 import cv2
 
-
 def main():
     # Initialization
-    input_video_path = "videos/traffic_intersection.mp4"
+    input_video_path = "videos/fully-congested.mp4"
     output_video_path = "output/output_video.mp4"
     csv_log_path = "output/vehicle_counts.csv"
 
@@ -53,12 +52,15 @@ def main():
 
         # Log data
         data_logger.log_frame_data(frame_number, vehicle_counts)
-
+        
         # Write frame to output video
         video_processor.write_frame(frame)
-
         # Display live feed
-        cv2.imshow("Processed Video", frame)
+        width = int(video_processor.cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        height = int(video_processor.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        window_width, window_height = 1600, int(1600 * (height / width))
+        display_frame = cv2.resize(frame, (window_width, window_height))
+        cv2.imshow("Processed Video", display_frame)
         if cv2.waitKey(1) & 0xFF == ord("q"):
             break
 
